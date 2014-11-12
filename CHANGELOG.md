@@ -1,3 +1,5 @@
+More good stuff
+
 ## 0.5.2
 
 This is a minor feature and bugfix release.
@@ -20,9 +22,9 @@ This is a feature release with a minor breaking API change.
 
 * The breaking API change affects the functions defined in the
   `puppetlabs.trapperkeeper.services/Service` protocol - namely, `service-context`.
-  References to these functions are no longer automatically in scope inside a 
+  References to these functions are no longer automatically in scope inside a
   `service` or `defservice` definition as they were previously (via macro magic),
-  and they must be `require`d like any other function - 
+  and they must be `require`d like any other function -
   `(require '[puppetlabs.trapperkeeper.services :refer [service-context]])`.
 * Changed schema version to support the Bool type
 * Improve implementation of the `service` macro
@@ -59,13 +61,13 @@ This is a maintenance/bugfix release.
 This release includes improved error handling and logic for shutting down Trapperkeeper applications.
 
 * Improved handling of errors during a service's `init` or `start` functions:
-  * All services' `stop` functions are now called, even when an error is thrown by any service's 
+  * All services' `stop` functions are now called, even when an error is thrown by any service's
     `init` or `start` function.  This means that `stop` implementations must now be resilient
     to invocation even when `init` or `start` has not executed.
   * Updated `boot-services-with-cli-data`, `boot-services-with-config`, and `boot-with-cli-data`
     to return the `TrapperkeeperApp` instance rather than propagating the `Throwable`.
-* Updated example "Reloaded" pattern usage to use the new `check-for-errors!` 
-  function on the `TrapperkeeperApp` instance to detect any errors that may have occurred 
+* Updated example "Reloaded" pattern usage to use the new `check-for-errors!`
+  function on the `TrapperkeeperApp` instance to detect any errors that may have occurred
   while services were being bootstrapped.
 
 ## 0.3.12
@@ -112,7 +114,7 @@ This is a bugfix and maintenance release.
 
  * Move typesafe config code to an external library - https://github.com/puppetlabs/clj-typesafe-config
  * Improve error handling and logging in `shutdown-on-error`.
- 
+
 ## 0.3.5
  * Improved error handling in the `service`/`defservice` macros.
  * Improved error handling in the shutdown logic, particularly when using `shutdown-on-error`.
@@ -142,5 +144,3 @@ This is a bugfix and maintenance release.
    by a service.
  * Upgrade to 0.5.1 of kitchensink, which includes a significant performance
    improvement for applications that are accepting HTTPS connections
-
-
