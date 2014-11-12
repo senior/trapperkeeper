@@ -1,4 +1,5 @@
-More good stuff
+More good stuff - Yay!
+
 
 ## 0.5.2
 
