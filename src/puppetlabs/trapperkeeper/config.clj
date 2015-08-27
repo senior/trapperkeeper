@@ -89,16 +89,25 @@
                            (str "Duplicate configuration entry: " ks)))))
          (merge {}))))
 
+(def config-transformers (atom []))
+
+(defn add-config-transformer [f]
+  (swap! config-transformers conj f))
+
 (defn config-service
   "Returns trapperkeeper's configuration service.  Expects
    to find a command-line argument value for `:config`; the value of this
    parameter should be the path to an .ini file or a directory of .ini files."
   [config]
-  (service ConfigService
-           []
-           (get-config [this] config)
-           (get-in-config [this ks] (get-in config ks))
-           (get-in-config [this ks default] (get-in config ks default))))
+  (let [transformed-config (if-let [transformers (seq @config-transformers)]
+                             (reduce (fn [config transform-config-fn]
+                                       (transform-config-fn config)) config transformers)
+                             config)]
+    (service ConfigService
+             []
+             (get-config [this] transformed-config)
+             (get-in-config [this ks] (get-in transformed-config ks))
+             (get-in-config [this ks default] (get-in transformed-config ks default)))))
 
 (defn parse-config-data
   "Parses the .ini, .edn, .conf, .json, or .properties configuration file(s)
